@@ -54,14 +54,14 @@ const UserService = {
 
       const languageWords = [
         ['Merde', 'Shit', 2],
-        ['Va te faire foutre', 'Go Fuck Yourself', 3],
+        ['Va te faire foutre', 'Kiss my ass', 3],
         ['Putain', 'Whore', 4],
         ['Salaud', 'Bastard', 5],
-        ['Zut', 'Darn', 6],
-        ['Salope', 'Bitch', 7],
+        ['Zut', 'Damn', 6],
+        ['Salope', 'Slut', 7],
         ['Brûle en l’enfer', 'Burn In Hell', 8],
         ['Ta Gueule', 'Shut Up', 8],
-        ['Enculer', 'Fuck', null],
+        ['Enculer', 'Ass Fuck', null],
       ];
 
       const [languageHeadId] = await trx.into('word').insert(

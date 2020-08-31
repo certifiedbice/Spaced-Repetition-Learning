@@ -22,14 +22,14 @@ VALUES
 INSERT INTO "word" ("id", "language_id", "original", "translation", "next")
 VALUES
   (1, 1, 'Merde', 'Shit', 2),
-  (2, 1, 'Va te faire foutre', 'Go Fuck Yourself', 3),
+  (2, 1, 'Va te faire foutre', 'Kiss my ass', 3),
   (3, 1, 'Putain', 'Whore', 4),
   (4, 1, 'Salaud', 'Bastard', 5),
-  (5, 1, 'Zut', 'Darn', 6),
-  (6, 1, 'Salope', 'Bitch', 7),
+  (5, 1, 'Zut', 'Damn', 6),
+  (6, 1, 'Salope', 'Slut', 7),
   (7, 1, 'Brûle en l’enfer', 'Burn In Hell', 8),
   (7, 1, 'Ta Gueule', 'Shut Up', 9),
-  (9, 1, 'Enculer', 'Fuck', null);
+  (9, 1, 'Enculer', 'Ass Fuck', null);
 
 UPDATE "language" SET head = 1 WHERE id = 1;
 
