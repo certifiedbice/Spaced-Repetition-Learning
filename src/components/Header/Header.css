@@ -1,26 +1,26 @@
-header h1 a{
-	font-family: 'Sonsie One', cursive;
-	font-size: 54px;
-	text-decoration: none;
-	font-weight: 700;
-	color: #333;
+header h1 a {
+  font-family: 'Sonsie One', cursive;
+  font-size: 5.5vw;
+  text-decoration: none;
+  font-weight: 700;
+  color: #333;
 }
 
-header h1 a:hover{
-	color: #fff;
-	text-shadow: 4px 4px 4px #333;
+header h1 a:hover {
+  color: #fff;
+  text-shadow: 4px 4px 4px #333;
 }
 
-nav a{
-	background-color: #333;
-	border: 1px solid #000;
-	border-radius: 10px;
-	padding: 5px 15px 5px 15px;
-	text-decoration: none;
-	font-weight: 700;
-	color: #fff;
+nav a {
+  background-color: #333;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 5px 15px 5px 15px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #fff;
 }
-nav a:hover{
-	background-color: #fff;
-	color: #333;
+nav a:hover {
+  background-color: #fff;
+  color: #333;
 }

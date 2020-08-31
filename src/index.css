@@ -8,13 +8,13 @@ body {
   margin: 0;
   padding: 0;
   background-image: radial-gradient(circle, #d1d1d1, #333);
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 :root {
-	height: 100%;
-	width: 100%;
+  height: 100%;
+  width: 100%;
   --font-size: calc(10px + 1vmin);
 }

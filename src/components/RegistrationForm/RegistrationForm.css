@@ -1,0 +1,25 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form div {
+  display: flex;
+  flex-direction: row;
+}
+
+input {
+  flex: 1;
+  width: 50%;
+  clear: both;
+  float: inline-end;
+}
+
+label {
+  flex: 2;
+  display: flex;
+  float: inline-start;
+  clear: left;
+  width: 250px;
+  text-align: center;
+}
