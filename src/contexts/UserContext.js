@@ -5,7 +5,7 @@ import IdleService from '../services/idle-service';
 
 const UserContext = React.createContext({
   user: {},
-  dashboard: { language: { name: '' } },
+  dashboard: {},
   error: null,
   setError: () => {},
   clearError: () => {},
@@ -19,7 +19,11 @@ export default UserContext;
 export class UserProvider extends Component {
   constructor(props) {
     super(props);
-    const state = { user: {}, dashboard: {}, error: null };
+    const state = { 
+		user: {}, 
+		dashboard: { language: { name: 'xxx' } }, 
+		error: null 
+	};
 
     const jwtPayload = TokenService.parseAuthToken();
 

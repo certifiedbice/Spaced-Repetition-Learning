@@ -4,32 +4,32 @@ import UserContext from '../../contexts/UserContext';
 import './Dashboard.css';
 
 class Dashboard extends Component {
-  static contextType = UserContext;
+	static contextType = UserContext;
 
-  render() {
-    // if (this.context.dashboard.language) {
-    //   language = this.context.dashboard.language;
-    //   words = this.context.dashboard.words;
-    //   console.log(language.name);
-    // }
-    return (
-      <div>
-        <ul>
-          <li>Language: {1}</li>
-          <li>
-            Words
-            <ul>
-              <li>word 1:{1}</li>
-              <li>word 2:</li>
-              <li>word 3:</li>
-              <li>word 4:</li>
-            </ul>
-          </li>
-          <li>Score: </li>
-        </ul>
-      </div>
-    );
-  }
+	
+
+	render() {
+		const language = this.context.dashboard.language;
+		const words = this.context.dashboard.words;
+		console.log(language.name);			
+		return (
+			<div>
+				<ul>
+					<li>Language: {language.name}</li>
+					<li>
+						Words
+						<ul>
+							<li>word 1:</li>
+							<li>word 2:</li>
+							<li>word 3:</li>
+							<li>word 4:</li>
+						</ul>
+					</li>
+					<li>Score: </li>
+				</ul>
+			</div>
+		);
+	}
 }
 
 export default Dashboard;
