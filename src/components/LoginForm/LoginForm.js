@@ -19,11 +19,12 @@ class LoginForm extends Component {
   handleSubmit = (ev) => {
     ev.preventDefault();
     const { username, password } = ev.target;
+    console.log(username.value.toLowerCase());
 
     this.setState({ error: null });
 
     AuthApiService.postLogin({
-      username: username.value,
+      username: username.value.toLowerCase(),
       password: password.value,
     })
       .then((res) => {
