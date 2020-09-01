@@ -19,7 +19,7 @@ class RegistrationForm extends Component {
     const { name, username, password } = ev.target;
     AuthApiService.postUser({
       name: name.value,
-      username: username.value,
+      username: username.value.toLowerCase(),
       password: password.value,
     })
       .then((user) => {
