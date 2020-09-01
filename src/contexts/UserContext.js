@@ -5,6 +5,7 @@ import IdleService from '../services/idle-service'
 
 const UserContext = React.createContext({
   user: {},
+  dashboard: {},
   error: null,
   setError: () => {},
   clearError: () => {},
@@ -18,7 +19,7 @@ export default UserContext
 export class UserProvider extends Component {
   constructor(props) {
     super(props)
-    const state = { user: {}, error: null }
+    const state = { user: {}, dashboard: {}, error: null }
 
     const jwtPayload = TokenService.parseAuthToken()
 
@@ -46,6 +47,10 @@ export class UserProvider extends Component {
     IdleService.unRegisterIdleResets()
     TokenService.clearCallbackBeforeExpiry()
   }
+
+	setDashboard=data=>{
+		this.setState({ dashboard:data })
+	}
 
   setError = error => {
     console.error(error)
@@ -105,6 +110,8 @@ export class UserProvider extends Component {
     const value = {
       user: this.state.user,
       error: this.state.error,
+	  dashboard:this.state.dashboard,
+	  setDashboard: this.setDashboard,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,

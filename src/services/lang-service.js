@@ -1,13 +1,19 @@
 import config from '../config';
+import TokenService from './token-service';
 
 const LanguageService = {
   getAllLanguageData() {
-    return fetch(`${config.API_ENDPOINT}/language`)
-      .then((res) =>
-        !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-      )
-      .catch((error) => console.error(error));
-  },
+ 	 	return fetch(`${config.API_ENDPOINT}/language`,{
+			headers:{
+				'content-type':'application/json',
+				'authorization':`bearer ${TokenService.getAuthToken()}`
+			}
+		})
+		.then((res) =>
+			!res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+		)
+		.catch((error) => console.error(error));
+	},
 };
 
 export default LanguageService;
