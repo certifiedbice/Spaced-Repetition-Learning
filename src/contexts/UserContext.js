@@ -19,11 +19,31 @@ export default UserContext;
 export class UserProvider extends Component {
   constructor(props) {
     super(props);
-    const state = { 
-		user: {}, 
-		dashboard: { language: { name: 'xxx' } }, 
-		error: null 
-	};
+    const state = {
+      user: {},
+      dashboard: {
+        language: {
+          name: '',
+          head: 0,
+          id: 0,
+          total_score: 0,
+          user_id: 0,
+        },
+        words: [
+          {
+            correct_count: 0,
+            id: 0,
+            incorrect_count: 0,
+            language_id: 0,
+            memory_value: 0,
+            next: 0,
+            original: '',
+            translation: '',
+          },
+        ],
+      },
+      error: null,
+    };
 
     const jwtPayload = TokenService.parseAuthToken();
 
