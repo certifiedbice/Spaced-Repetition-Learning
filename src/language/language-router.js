@@ -3,6 +3,7 @@ const LanguageService = require('./language-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 const languageRouter = express.Router();
+const jsonBodyParser = express.json();
 
 languageRouter.use(requireAuth).use(async (req, res, next) => {
   try {
@@ -67,13 +68,35 @@ languageRouter.get('/head', async (req, res, next) => {
   }
 });
 
-languageRouter.post('/guess', async (req, res, next) => {
+languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
   try {
-    if (req.body === undefined) {
+    const currentLanguage = await LanguageService.getUsersLanguage(
+      req.app.get('db'),
+      req.language.user_id
+    );
+    const answer = await LanguageService.getLanguageWords(
+      req.app.get('db'),
+      req.language.id
+    );
+    if (!req.body.hasOwnProperty('guess')) {
       res.status(400).json({ error: "Missing 'guess' in request body" }).end();
     }
+    if (
+      req.body.guess.toLowerCase() ===
+      answer[currentLanguage.head - 1].translation.toLowerCase()
+    ) {
+      res.status(200).json({ response: 'correct' }).end();
+    }
+    if (
+      req.body.guess.toLowerCase() !==
+      answer[currentLanguage.head - 1].translation.toLowerCase()
+    ) {
+      res.status(200).json({ response: 'incorrect' }).end();
+    } else {
+      res.status(500).end();
+    }
     next();
-  } catch {
+  } catch (error) {
     next(error);
   }
 });
