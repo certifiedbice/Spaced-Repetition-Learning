@@ -7,8 +7,8 @@ module.exports = {
   'port': process.env.MIGRATION_DATABASE_PORT,
   'connectionString':
     process.env.NODE_ENV === 'test'
-      ? process.env.MIGRATION_TEST_DATABASE_NAME
-      : process.env.MIGRATION_DATABASE_NAME,
+      ? process.env.TEST_DATABASE_URL
+      : process.env.DATABASE_URL,
   'username': process.env.MIGRATION_DATABASE_USER,
   'password': process.env.MIGRATION_DATABASE_PASS,
 };
