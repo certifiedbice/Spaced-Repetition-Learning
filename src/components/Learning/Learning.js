@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UserContext from '../../contexts/UserContext';
+import LanguageService from '../../services/lang-service.js';
 import './Learning.css';
 
 class Learning extends Component {
@@ -19,7 +20,7 @@ class Learning extends Component {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            this.context.checkGuess(e.target.guess.value);
+            LanguageService.postGuess(e.target.guess.value);
           }}
         >
           <input type='text' name='guess' required></input>
