@@ -6,10 +6,13 @@ import IdleService from '../services/idle-service';
 const UserContext = React.createContext({
   user: {},
   dashboard: {},
-  redirect:false,
+  head: {},
+  redirect: false,
   error: null,
-//   setRedirect: () => {},
+  //   setRedirect: () => {},
+  checkGuess: () => {},
   setDashboard: () => {},
+  setHead: () => {},
   setError: () => {},
   clearError: () => {},
   setUser: () => {},
@@ -45,7 +48,15 @@ export class UserProvider extends Component {
           },
         ],
       },
-	//   redirect:false,
+      head: {
+        wordsDetails: {
+          totalScore: 0,
+          correct_count: 0,
+          incorrect_count: 0,
+          nextWord: '',
+        },
+      },
+      //   redirect:false,
       error: null,
     };
 
@@ -76,13 +87,30 @@ export class UserProvider extends Component {
     TokenService.clearCallbackBeforeExpiry();
   }
 
+  checkGuess = (guess) => {
+    const answer = this.state.dashboard.words.find(
+      (word) => word.original === this.state.head.wordsDetails.nextWord
+    );
+    if (guess.toLowerCase() === answer.translation.toLowerCase()) {
+      console.log('correct');
+      return { guess: 'correct' };
+    } else {
+      console.log('incorrect');
+      return { guess: 'incorrect' };
+    }
+  };
+
   setDashboard = (data) => {
     this.setState({ dashboard: data });
   };
 
-//   setRedirect = (data) => {
-//     this.setState({ redirect: data });
-//   };
+  setHead = (data) => {
+    this.setState({ head: data });
+  };
+
+  //   setRedirect = (data) => {
+  //     this.setState({ redirect: data });
+  //   };
 
   setError = (error) => {
     console.error(error);
@@ -141,11 +169,14 @@ export class UserProvider extends Component {
   render() {
     const value = {
       user: this.state.user,
-	  redirect:this.state.redirect,
+      redirect: this.state.redirect,
       error: this.state.error,
       dashboard: this.state.dashboard,
-    //   setRedirect: this.setRedirect,
+      head: this.state.head,
+      //   setRedirect: this.setRedirect,
       setDashboard: this.setDashboard,
+      checkGuess: this.checkGuess,
+      setHead: this.setHead,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,

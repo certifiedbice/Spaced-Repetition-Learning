@@ -5,7 +5,10 @@ import UserContext from '../../contexts/UserContext';
 
 class LearningRoute extends Component {
   static contextType = UserContext;
+
   async componentDidMount() {
+    const head = await LanguageService.getLanguageHead();
+    this.context.setHead(head);
     const dashboard = await LanguageService.getAllLanguageData();
     this.context.setDashboard(dashboard);
   }
