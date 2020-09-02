@@ -134,11 +134,13 @@ describe.only('Language Endpoints', function () {
         .get(`/api/language/head`)
         .set('Authorization', helpers.makeAuthHeader(testUser))
         .expect(200)
-        .expect({
-          nextWord: headWord.original,
-          totalScore: 0,
-          wordCorrectCount: 0,
-          wordIncorrectCount: 0,
+        .expect({ 
+			wordsDetails:{
+				nextWord: headWord.original,
+				totalScore: 0,
+				correct_count: 0,
+				incorrect_count: 0,
+			}
         });
     });
   });

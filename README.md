@@ -1,5 +1,8 @@
 # Spaced repetition API!
 
+## GIST:
+https://gist.github.com/certifiedbice/6952f9e821dda4541d7556fd77d04ce5
+
 ## Local dev setup
 
 If using user `dunder-mifflin`:

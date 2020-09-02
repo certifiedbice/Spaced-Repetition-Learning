@@ -42,14 +42,21 @@ languageRouter.get('/', async (req, res, next) => {
 
 languageRouter.get('/head', async (req, res, next) => {
   try {
-    const words = await LanguageService.getLanguageHead(
+    const wordDetails = await LanguageService.getLanguageHead(
       req.app.get('db'),
       req.language.id
     );
-
-    res.json({
-      language: req.language,
-      words,
+	
+	const wordList=await LanguageService.getLanguageWords(req.app.get('db'), req.language.id)
+	const nextWord=wordList.find(word=>word.id==req.language.head)
+    
+	res.json({
+		wordsDetails:{
+     	 	totalScore: req.language.total_score,
+			correct_count: wordDetails.correct_count,
+			incorrect_count: wordDetails.incorrect_count,
+			nextWord: nextWord.original,
+		}
     });
     next();
   } catch (error) {
