@@ -52,6 +52,8 @@ class LoginForm extends Component {
             ref={this.firstInput}
             id='login-username-input'
             name='username'
+            suggested='username'
+            autoComplete='username'
             required
           />
         </div>
@@ -61,6 +63,8 @@ class LoginForm extends Component {
             id='login-password-input'
             name='password'
             type='password'
+            suggested='current-password'
+            autoComplete='current-password'
             required
           />
         </div>
