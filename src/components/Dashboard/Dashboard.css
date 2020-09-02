@@ -1,0 +1,49 @@
+#dashboard-section{
+
+}
+
+#dashboard-section h2{
+	font-size: 3.5vw;
+	color: #333;
+}
+#dashboard-section h3{
+	margin: 0;
+	font-family: 'Sonsie One', cursive;
+	font-size: 5.5vw;
+	color: #333;
+}
+
+#dashboard-section ul{
+	list-style: none;
+	list-style-type: none;
+	padding: 0;
+}
+
+#dashboard-section ul li{
+	margin: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 4px 4px 8px #000;
+}
+
+#dashboard-section ul li:last-child{
+	background-color: #666;
+	color: #fff;
+}
+
+#start-learning {
+	width: 25%;
+	background-color: #333;
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding: 5px 15px 5px 15px;
+	text-decoration: none;
+	font-weight: 700;
+	color: #fff;
+	cursor: pointer;
+}
+#start-learning:hover {
+	background-color: #fff;
+	color: #333;
+}

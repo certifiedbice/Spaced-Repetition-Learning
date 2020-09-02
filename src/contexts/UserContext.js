@@ -6,7 +6,10 @@ import IdleService from '../services/idle-service';
 const UserContext = React.createContext({
   user: {},
   dashboard: {},
+  redirect:false,
   error: null,
+//   setRedirect: () => {},
+  setDashboard: () => {},
   setError: () => {},
   clearError: () => {},
   setUser: () => {},
@@ -42,6 +45,7 @@ export class UserProvider extends Component {
           },
         ],
       },
+	//   redirect:false,
       error: null,
     };
 
@@ -75,6 +79,10 @@ export class UserProvider extends Component {
   setDashboard = (data) => {
     this.setState({ dashboard: data });
   };
+
+//   setRedirect = (data) => {
+//     this.setState({ redirect: data });
+//   };
 
   setError = (error) => {
     console.error(error);
@@ -133,8 +141,10 @@ export class UserProvider extends Component {
   render() {
     const value = {
       user: this.state.user,
+	  redirect:this.state.redirect,
       error: this.state.error,
       dashboard: this.state.dashboard,
+    //   setRedirect: this.setRedirect,
       setDashboard: this.setDashboard,
       setError: this.setError,
       clearError: this.clearError,
