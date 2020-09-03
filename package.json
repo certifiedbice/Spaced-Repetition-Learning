@@ -13,7 +13,7 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "author": "Tom `tomatao` HT <tomht@thinkful.com>",
+  "author": "Chatchawan, Bice",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
