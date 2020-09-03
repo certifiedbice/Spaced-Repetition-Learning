@@ -26,6 +26,22 @@ const LanguageService = {
       )
       .catch((error) => console.error(error));
   },
+  postGuess(guess) {
+    return fetch(`${config.API_ENDPOINT}/language/guess`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `bearer ${TokenService.getAuthToken()}`,
+      },
+      body: JSON.stringify({
+        guess: guess,
+      }),
+    })
+      .then((res) =>
+        !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+      )
+      .catch((error) => console.error(error));
+  },
 };
 
 export default LanguageService;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import LanguageService from '../../services/lang-service.js';
 import UserContext from '../../contexts/UserContext';
 import Dashboard from '../../components/Dashboard/Dashboard';
-import TokenService from '../../services/token-service.js';
 
 class DashboardRoute extends Component {
   static contextType = UserContext;
@@ -13,9 +12,7 @@ class DashboardRoute extends Component {
   }
 
   render() {
-	return(
-			<Dashboard />
-	)
+    return <Dashboard />;
   }
 }
 
