@@ -27,7 +27,7 @@ VALUES
   (4, 1, 'Salaud', 'Bastard', 5),
   (5, 1, 'Zut', 'Damn', 6),
   (6, 1, 'Salope', 'Slut', 7),
-  (7, 1, 'Brûle en l’enfer', 'Burn In Hell', 8),
+  (7, 1, 'Br&#535l;e en l&apos;enfer', 'Burn In Hell', 8),
   (8, 1, 'Ta Gueule', 'Shut Up', 9),
   (9, 1, 'Enculer', 'Ass Fuck', null);
 

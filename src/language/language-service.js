@@ -1,3 +1,5 @@
+const LinkedList = require('../linkedlist/linklist');
+
 const LanguageService = {
   getUsersLanguage(db, user_id) {
     return db
@@ -35,6 +37,12 @@ const LanguageService = {
       .first()
       .select('next', 'memory_value', 'correct_count', 'incorrect_count')
       .where({ language_id });
+  },
+
+  generateLinkedList(words) {
+    const memoryValues = new LinkedList();
+    Object.keys(words).forEach((key) => memoryValues.insertLast(words[key]));
+    return memoryValues;
   },
 };
 

@@ -79,32 +79,40 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
       req.language.id
     );
 
-	// const guess=req.body.guess.toLowerCase();
-	const answer=(wordList.find(word=>word.id==currentLanguage.head)).translation.toLowerCase()
-	const originalAnswer=(wordList.find(word=>word.id==currentLanguage.head)).original
-	
-	
-	//console.log(answer)
+    // const guess=req.body.guess.toLowerCase();
+    const answer = wordList
+      .find((word) => word.id == currentLanguage.head)
+      .translation.toLowerCase();
+    const originalAnswer = wordList.find(
+      (word) => word.id == currentLanguage.head
+    ).original;
+    const nextWord = wordList.find(
+      (word) => word.id == currentLanguage.head + 1
+    ).original;
+
+    //console.log(answer)
     if (!req.body.guess) {
       res.status(400).json({ error: "Missing 'guess' in request body" }).end();
     }
+    const memoryValuesList = LanguageService.generateLinkedList(wordList);
+    console.log(memoryValuesList);
     if (req.body.guess.toLowerCase() === answer) {
       res.status(200).json({ response: 'correct' }).end();
     }
     if (req.body.guess.toLowerCase() !== answer) {
-		const somehead = await LanguageService.getLanguageHead(
-      		req.app.get('db'),
-      		req.language.id
-    	);
-		console.log(somehead)
-		newObj={
-			answer:answer,
-			isCorrect:false,
-			nextWord:originalAnswer,
-			totalScore:currentLanguage.totalScore,
-			wordCorrectCount:somehead.correct_count,
-			wordIncorrectCount:somehead.incorrect_count
-		}
+      const somehead = await LanguageService.getLanguageHead(
+        req.app.get('db'),
+        req.language.id
+      );
+
+      newObj = {
+        answer: answer,
+        isCorrect: false,
+        nextWord: nextWord,
+        totalScore: currentLanguage.total_score,
+        wordCorrectCount: somehead.correct_count,
+        wordIncorrectCount: somehead.incorrect_count,
+      };
       res.status(200).json(newObj).end();
     } else {
       res.status(500).end();
