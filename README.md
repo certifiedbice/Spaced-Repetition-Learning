@@ -1,7 +1,10 @@
 # Spaced Repetition Capstone
 
-## Vercel
+## Heroku
+https://warm-dawn-94119.herokuapp.com/
 
+## Vercel
+https://spaced-repetition-psi.vercel.app
 
 ## Setup
 
