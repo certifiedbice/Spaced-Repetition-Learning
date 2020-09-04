@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import UserContext from '../../contexts/UserContext';
-import LanguageService from '../../services/lang-service.js';
 import { withRouter } from 'react-router-dom';
 import './Learning.css';
 
 class Learning extends Component {
-  constructor(props) {
-    super(props);
-    state: {
-      guess: '';
-    }
-  }
   static contextType = UserContext;
   handleChange(e) {
-    this.setState({ guess: e.target.guess.value });
+    this.context.setGuess(e.target.value);
   }
 
   render() {
@@ -23,7 +16,7 @@ class Learning extends Component {
       <input
         name='button'
         id='result'
-        type='submit'
+        type='button'
         value='Guess'
         onClick={() => {
           history.push('/result');
@@ -38,19 +31,13 @@ class Learning extends Component {
         <div id='correct_count'>{`Correct guesses: ${head.wordsDetails.correct_count}`}</div>
         <div id='incorrect_count'>{`Incorrect guesses: ${head.wordsDetails.incorrect_count}`}</div>
         <div id='score'>{`Score: ${head.wordsDetails.totalScore}`}</div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            LanguageService.postGuess(e.target.guess.value);
-          }}
-        >
+        <form>
           <input
             type='text'
             name='guess'
-            onChange={handleChange}
+            onChange={(e) => this.handleChange(e)}
             required
           ></input>
-          <button type='submit'>Guess</button>
           <ResultButton />
         </form>
       </div>

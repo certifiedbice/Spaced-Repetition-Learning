@@ -27,6 +27,7 @@ export class UserProvider extends Component {
     super(props);
     const state = {
       user: {},
+      guess: '',
       dashboard: {
         language: {
           name: '',
@@ -125,6 +126,10 @@ export class UserProvider extends Component {
     this.setState({ user });
   };
 
+  setGuess = (guess) => {
+    this.setState({ guess: guess });
+  };
+
   processLogin = (authToken) => {
     TokenService.saveAuthToken(authToken);
     const jwtPayload = TokenService.parseAuthToken();
@@ -169,6 +174,7 @@ export class UserProvider extends Component {
   render() {
     const value = {
       user: this.state.user,
+      guess: this.state.guess,
       redirect: this.state.redirect,
       error: this.state.error,
       dashboard: this.state.dashboard,
@@ -180,6 +186,7 @@ export class UserProvider extends Component {
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,
+      setGuess: this.setGuess,
       processLogin: this.processLogin,
       processLogout: this.processLogout,
     };
