@@ -41,7 +41,16 @@ const LanguageService = {
 
   generateLinkedList(words) {
     const memoryValues = new LinkedList();
-    Object.keys(words).forEach((key) => memoryValues.insertLast(words[key]));
+    let nextValue = 2;
+    let counter = words.length - 1;
+    while (counter > 0) {
+      memoryValues.insertLast(
+        words.find((object) => object.next === nextValue && object !== null)
+        // words.forEach((object) => console.log(object))
+      );
+      counter--;
+      nextValue++;
+    }
     return memoryValues;
   },
 };

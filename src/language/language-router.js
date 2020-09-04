@@ -70,63 +70,69 @@ languageRouter.get('/head', async (req, res, next) => {
 });
 
 languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
-	try {
-		
-		if (!req.body.guess) {
-			res.status(400).json({ error: "Missing 'guess' in request body" }).end();
-		}
+  try {
+    if (!req.body.guess) {
+      res.status(400).json({ error: "Missing 'guess' in request body" }).end();
+    } else if (req.body.guess) {
+      const currentLanguage = await LanguageService.getUsersLanguage(
+        req.app.get('db'),
+        req.language.user_id
+      );
+      const wordList = LanguageService.generateLinkedList(
+        await LanguageService.getLanguageWords(
+          req.app.get('db'),
+          req.language.id
+        )
+      );
 
-		else if (req.body.guess) {
-			const currentLanguage = await LanguageService.getUsersLanguage(req.app.get('db'),req.language.user_id);
-			const wordList = LanguageService.generateLinkedList(await LanguageService.getLanguageWords(req.app.get('db'),req.language.id));
-			
-			const correctAnswer = wordList.head.value.translation.toLowerCase();
+      const correctAnswer = wordList.head.value.translation.toLowerCase();
 
-			const guess=req.body.guess.toLowerCase();
-			const currentWord=wordList.head.value;
-			const nextWord=wordList.head.next.value;
-			let totalScore=currentLanguage.total_score;
+      const guess = req.body.guess.toLowerCase();
+      const currentWord = wordList.head.value;
+      const nextWord = wordList.head.next.value;
+      let totalScore = currentLanguage.total_score;
 
-			returnWordObj = {
-				answer: correctAnswer,
-				isCorrect: false,
-				nextWord: nextWord.original,
-				totalScore: totalScore,
-				wordCorrectCount: currentWord.correct_count,
-				wordIncorrectCount: currentWord.incorrect_count,
-			};
+      returnWordObj = {
+        answer: correctAnswer,
+        isCorrect: false,
+        nextWord: nextWord.original,
+        totalScore: totalScore,
+        wordCorrectCount: currentWord.correct_count,
+        wordIncorrectCount: currentWord.incorrect_count,
+      };
 
-			if (guess===correctAnswer) {
-				//double the value of m
-				currentWord.memory_value+=currentWord.memory_value;
-				returnWordObj.isCorrect=true;
-				returnWordObj.wordCorrectCount=currentWord.correct_count++;
-				//increment total_score
-				totalScore++;
-				//incremement the returnWordObj totalScore value as well 
-				returnWordObj.totalScore=totalScore;
-			}
-			
-			else if (guess!==correctAnswer) {
-				//reset m to 1
-				currentWord.memory_value=1;
-				returnWordObj.wordIncorrectCount=currentWord.incorrect_count++;
-			}
-			
-			//move the node up m places in the linkedlist
-			wordList.move(wordList.head,currentWord.memory_value);
-			console.log(wordList)
+      if (guess === correctAnswer) {
+        //double the value of m
+        currentWord.memory_value += currentWord.memory_value;
+        returnWordObj.isCorrect = true;
+        returnWordObj.wordCorrectCount = currentWord.correct_count++;
+        //increment total_score
+        totalScore++;
+        //incremement the returnWordObj totalScore value as well
+        returnWordObj.totalScore = totalScore;
+      } else if (guess !== correctAnswer) {
+        //reset m to 1
+        currentWord.memory_value = 1;
+        returnWordObj.wordIncorrectCount = currentWord.incorrect_count++;
+      }
 
-			//persist the list in the database
-			//update the client
+      //move the node up m places in the linkedlist
+      console.log(wordList.display());
+      wordList.move(wordList, 50);
+      console.log(wordList.display());
 
-			
-			// res.status(200).json(returnWordObj).end();
-			res.status(200).end();
-		}
-		else {res.status(500).end();}
-		next();
-	} catch (error) {next(error);}
+      //persist the list in the database
+      //update the client
+
+      // res.status(200).json(returnWordObj).end();
+      res.status(200).end();
+    } else {
+      res.status(500).end();
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = languageRouter;
