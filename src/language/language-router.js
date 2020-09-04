@@ -78,8 +78,9 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 
 		else if (req.body.guess) {
 			const currentLanguage = await LanguageService.getUsersLanguage(req.app.get('db'),req.language.user_id);
-			const wordList = LanguageService.generateLinkedList(await LanguageService.getLanguageWords(req.app.get('db'),req.language.id));
+			let wordList = LanguageService.generateLinkedList(await LanguageService.getLanguageWords(req.app.get('db'),req.language.id));
 			
+			wordList.print()
 			const correctAnswer = wordList.head.value.translation.toLowerCase();
 
 			const guess=req.body.guess.toLowerCase();
@@ -114,8 +115,9 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 			}
 			
 			//move the node up m places in the linkedlist
-			wordList.move(wordList.head,currentWord.memory_value);
-			console.log(wordList)
+			//wordList.move(null,null,currentWord.memory_value,currentWord.memory_value);
+
+			
 
 			//persist the list in the database
 			//update the client

@@ -69,26 +69,6 @@ class LinkedList {
 		}
 		previousNode.next = currNode.next;
 	}
-	move(node, mark) {
-		if(mark>0){
-			console.log(`move=${mark}`)
-			
-			let a=node
-			
-			let b=node.next
-
-			a.next=b.next
-
-			node=b
-		
-			node.next=a
-
-			mark--;
-			
-			this.move(node.next,mark);
-		}
-		else{return}
-	}
 }
 
 module.exports = LinkedList;
