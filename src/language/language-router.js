@@ -86,8 +86,50 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 		
 			const wordList=LanguageService.generateLinkedList(tmpWordsList,currentLanguage.head);
 
-			res.status(200).end();
-			//   res.status(200).json(returnWordObj).end();
+			const correctAnswer = wordList.head.value.translation.toLowerCase();
+			const guess = req.body.guess.toLowerCase();
+			const currentWord = wordList.head.value;
+			const nextWord = wordList.head.next.value;
+			let totalScore = currentLanguage.total_score;
+			let isCorrect=false;
+			let correctCount=wordList.head.value.correct_count;
+			let inCorrectCount=wordList.head.value.incorrect_count;
+			
+			if (guess === correctAnswer) {
+				//double the value of m
+				currentWord.memory_value += currentWord.memory_value;
+				//set is correct
+				isCorrect = true;
+				//increment the correct count
+				correctCount++;
+				//increment total_score
+				totalScore++;
+			} else if (guess !== correctAnswer) {
+				//reset m to 1
+				isCorrect=false
+				currentWord.memory_value = 1;
+				inCorrectCount++;
+			}
+
+			//move the node up m places in the linkedlist
+			console.log(wordList.display());
+			wordList.move(wordList, currentWord.memory_value);
+			console.log(wordList.display());
+
+				returnWordObj = {
+					answer: correctAnswer,
+					isCorrect: isCorrect,
+					nextWord: nextWord.original,
+					totalScore: totalScore,
+					wordCorrectCount: correctCount,
+					wordIncorrectCount: inCorrectCount,
+				};
+			//persist the list in the database
+			//update the client
+
+
+			// res.status(200).end();
+			res.status(200).json(returnWordObj).end();
 		} else {
 			res.status(500).end();
 		}
