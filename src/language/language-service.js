@@ -40,29 +40,33 @@ const LanguageService = {
   	},
 
 	generateLinkedList(words,head) {
-		const memoryValues = new LinkedList();
-		let nextValue= words.find((object)=>object.id===head);
-			
-		// console.log(nextValue);
-		
-		// let nextObj=words.find((object)=>object.id===nextValue.next)
-		let nextObj=words.find((object)=>object.id===nextValue.next)
+		// new linked list instance
+		const wordsObjList = new LinkedList();
 
-		// console.log(nextObj)
-		
+		// the original head before linked list generation
+		let originalHead=head;
+
+		// counter for while loop
 		let counter = words.length;
+
+		// decrementing loop that builds the linked list
 		while (counter > 0) {
-			memoryValues.insertLast(
-				words.find((object)=>object.id===head)
-			);
+			// this is the current word obj
+			currentWordObj= words.find((object)=>object.id===head);
+			
+			// points the last word obj back to the first in the list
+			if(counter===1)currentWordObj.next=originalHead;
+			
+			// inserts into the linked list
+			wordsObjList.insertLast(words.find((object)=>object.id===head));
 
-			//update head
-			head=words.find((object)=>object.id===nextValue.next).next
-			console.log(head)
-
+			// update head
+			head=currentWordObj.next
+		
+			// decrement the counter
 			counter--;
 		}
-		return memoryValues;
+		return wordsObjList;
 	},
 };
 

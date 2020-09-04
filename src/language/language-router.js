@@ -74,29 +74,20 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 		if (!req.body.guess) {
 			res.status(400).json({ error: "Missing 'guess' in request body" }).end();
 		} else if (req.body.guess) {
-		const currentLanguage = await LanguageService.getUsersLanguage(
-			req.app.get('db'),
-			req.language.user_id
-		);
+			const currentLanguage = await LanguageService.getUsersLanguage(
+				req.app.get('db'),
+				req.language.user_id
+			);
 
-		console.log(currentLanguage)
-
-		const tmpWordsList=await LanguageService.getLanguageWords(
-			req.app.get('db'),
-			req.language.id
-		);
+			const tmpWordsList=await LanguageService.getLanguageWords(
+				req.app.get('db'),
+				req.language.id
+			);
 		
-		// console.log(tmpWordsList)
+			const wordList=LanguageService.generateLinkedList(tmpWordsList,currentLanguage.head);
 
-		const wordList=LanguageService.generateLinkedList(tmpWordsList,currentLanguage.head);
-
-		// console.log(wordList.head)
-		// console.log(wordList.next)
-		
-		console.log(currentLanguage)
-		
-		res.status(200).end();
-		//   res.status(200).json(returnWordObj).end();
+			res.status(200).end();
+			//   res.status(200).json(returnWordObj).end();
 		} else {
 			res.status(500).end();
 		}
