@@ -92,8 +92,8 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 			const nextWord = wordList.head.next.value;
 			let totalScore = currentLanguage.total_score;
 			let isCorrect=false;
-			let correctCount=wordList.head.value.correct_count;
-			let inCorrectCount=wordList.head.value.incorrect_count;
+			// let correctCount=wordList.head.value.correct_count;
+			// let inCorrectCount=wordList.head.value.incorrect_count;
 			
 			if (guess === correctAnswer) {
 				//double the value of m
@@ -101,34 +101,46 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 				//set is correct
 				isCorrect = true;
 				//increment the correct count
-				correctCount++;
+				// correctCount++;
+				wordList.head.value.correct_count++;
 				//increment total_score
 				totalScore++;
 			} else if (guess !== correctAnswer) {
 				//reset m to 1
 				isCorrect=false
 				currentWord.memory_value = 1;
-				inCorrectCount++;
+				// inCorrectCount++;
+				wordList.head.value.incorrect_count++;
 			}
 
-			//move the node up m places in the linkedlist
-			console.log(wordList.display());
+			// console.log(wordList.display());
 			wordList.move(wordList, currentWord.memory_value);
-			console.log(wordList.display());
+			// console.log(wordList.display());
 
-				returnWordObj = {
-					answer: correctAnswer,
-					isCorrect: isCorrect,
-					nextWord: nextWord.original,
-					totalScore: totalScore,
-					wordCorrectCount: correctCount,
-					wordIncorrectCount: inCorrectCount,
-				};
-			//persist the list in the database
-			//update the client
+			// update language table based on req.language.id
+			LanguageService.updateLanguageTable(
+				req.app.get('db'),
+				req.language.id,
+				currentWord.id,
+				totalScore
+			);
+			// update the word table based on the current word
+			LanguageService.updateWordTable(
+				req.app.get('db'),
+				wordList
+			);
 
+			// Update for client
+			returnWordObj = {
+				answer: correctAnswer,
+				isCorrect: isCorrect,
+				nextWord: nextWord.original,
+				totalScore: totalScore,
+				wordCorrectCount: wordList.head.value.correct_count,
+				wordIncorrectCount: wordList.head.value.incorrect_count,
+			};
 
-			// res.status(200).end();
+			// res.status(200).end(); // Garbage
 			res.status(200).json(returnWordObj).end();
 		} else {
 			res.status(500).end();

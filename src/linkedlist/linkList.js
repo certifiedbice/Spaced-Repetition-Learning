@@ -73,18 +73,18 @@ class LinkedList {
     const arr = [];
     let currentNode = this.head;
     do {
-      arr.push(currentNode.value.id);
+      arr.push(currentNode.value);
       currentNode = currentNode.next;
     } while (currentNode.next !== null);
-    arr.push(currentNode.value.id);
+    arr.push(currentNode.value);
     return arr;
   }
   move(ll, n) {
     let node = ll.head;
     while (node.next !== null && n > 0) {
-      let tmp = node.value;
-      node.value = node.next.value;
-      node.next.value = tmp;
+      let tmp = node.value.next;
+      node.value.next = node.next.value.next;
+      node.next.value.next = tmp;
       node = node.next;
       n--;
     }
