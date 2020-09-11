@@ -14,7 +14,13 @@ class Learning extends Component {
     'wordIncorrectCount': 0,
   };
   async componentDidMount() {
-    this.setState(await LanguageService.postGuess(this.context.guess));
+	console.log(this.context.guess)
+	console.log(this.state.answer)
+	console.log(await LanguageService.postGuess(this.context.guess))
+    // .then(res=>{
+	// 	console.log(res)
+	// 	this.setState(res)
+	// });
   }
   render() {
     const {

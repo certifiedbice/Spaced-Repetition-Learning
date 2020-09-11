@@ -37,9 +37,9 @@ const LanguageService = {
         guess: guess,
       }),
     })
-      .then((res) =>
+      .then((res) =>{ console.log(res)
         !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-      )
+	  })
       .catch((error) => console.error(error));
   },
 };

@@ -8,6 +8,10 @@ class DashboardRoute extends Component {
 
   async componentDidMount() {
     const dashboard = await LanguageService.getAllLanguageData()
+	// There is an issue with an unauthorized request
+	// When first loaded today this.context.dashboard
+	// was undefined due to an unauthorized request which
+	// prevented retrieving the data.
 	this.context.setDashboard(dashboard);
   }
 
