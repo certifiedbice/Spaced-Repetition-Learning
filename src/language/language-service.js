@@ -51,8 +51,9 @@ const LanguageService = {
 
 		// decrementing loop that builds the linked list
 		while (counter > 0) {
+			// console.log(counter)
 			// this is the current word obj
-			currentWordObj= words.find((object)=>object.id===head);
+			currentWordObj=words.find((object)=>object.id===head);
 			
 			// points the last word obj back to the first in the list
 			// if(counter===1)currentWordObj.next=originalHead;
@@ -61,7 +62,7 @@ const LanguageService = {
 			wordsObjList.insertLast(words.find((object)=>object.id===head));
 
 			// update head
-			head=currentWordObj.next
+			if(currentWordObj.next!==null){head=currentWordObj.next}
 		
 			// decrement the counter
 			counter--;
@@ -69,44 +70,33 @@ const LanguageService = {
 		return wordsObjList;
 	},
 	async updateLanguageTable(db,id,head,totalScore){
-	// 	await db
-	// 	.from('language')
-	// 	.where({id:id})
-	// 	.update({head: head, total_score: totalScore})
+		await db
+		.from('language')
+		.where({id:id})
+		.update({head: head, total_score: totalScore})
 	},
-	// async updateWordTable(db,nextWord,currentWord,correctCount,inCorrectCount){
-	async updateWordTable(db,wordList){
-		console.log(wordList.head.value)
-		console.log(wordList.head.next.value)
-		console.log(wordList.head.next.next.value)
-		// console.log(wordList.head.next.next.next.next.next.next.next.next)
-		
-		// the original head before linked list generation
-		// let originalHead=head;
-
-		head=wordList.head.value.id
-
-		// counter for while loop
-		// let counter = words.length;
-		// console.log(wordList.display())
-
-		// decrementing loop that builds the linked list
-		// while (counter > 0) {
-		// 	// this is the current word obj
-		// 	currentWordObj= wordList.find((object)=>object.id===head);
+	async updateWordTable(db,wordList,mem_val,currId){
+		// create array from wordList
+		let tmpArray=[];
+		while(wordList.head.next!==null){
+			tmpArray.push(wordList.head)
+			wordList.head=wordList.head.next;
+		}
+		// persist to database
+		for(let i=0;i<tmpArray.length;i++){
+			// Assign the memory value before persist
+			if(tmpArray[i].value.id===currId){
+				tmpArray[0].value.memory_value=mem_val;
+			}
+			// this is the current word obj
+			currentWordObj=tmpArray[i];
 			
-		// 	// meat and potatos
-		// 	await db
-		// 	.from('word')
-		// 	.where({id:currentWordObj.id})
-		// 	.update({correct_count: currentWordObj.correct_count, incorrect_count: currentWordObj.incorrect_count, next: currentWordObj.next})
-
-		// 	// update head
-		// 	head=currentWordObj.next
-		
-		// 	// decrement the counter
-		// 	counter--;
-		// }
+			// meat and potatos
+			await db
+			.from('word')
+			.where({id:currentWordObj.value.id})
+			.update({memory_value: currentWordObj.value.memory_value, correct_count: currentWordObj.value.correct_count, incorrect_count: currentWordObj.value.incorrect_count, next: currentWordObj.value.next})
+		}
 	},
 };
 

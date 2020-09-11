@@ -70,7 +70,7 @@ languageRouter.get('/head', async (req, res, next) => {
 });
 
 languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
-	try {
+	try { //console.log(req.body)
 		if (!req.body.guess) {
 			res.status(400).json({ error: "Missing 'guess' in request body" }).end();
 		} else if (req.body.guess) {
@@ -78,70 +78,55 @@ languageRouter.post('/guess', jsonBodyParser, async (req, res, next) => {
 				req.app.get('db'),
 				req.language.user_id
 			);
-
 			const tmpWordsList=await LanguageService.getLanguageWords(
 				req.app.get('db'),
 				req.language.id
 			);
-		
 			const wordList=LanguageService.generateLinkedList(tmpWordsList,currentLanguage.head);
-
-			const correctAnswer = wordList.head.value.translation.toLowerCase();
 			const guess = req.body.guess.toLowerCase();
 			const currentWord = wordList.head.value;
+			const correctAnswer = currentWord.translation.toLowerCase();
 			const nextWord = wordList.head.next.value;
 			let totalScore = currentLanguage.total_score;
 			let isCorrect=false;
-			// let correctCount=wordList.head.value.correct_count;
-			// let inCorrectCount=wordList.head.value.incorrect_count;
-			
 			if (guess === correctAnswer) {
 				//double the value of m
-				currentWord.memory_value += currentWord.memory_value;
+				currentWord.memory_value=(wordList.head.value.memory_value+wordList.head.value.memory_value);
 				//set is correct
 				isCorrect = true;
 				//increment the correct count
-				// correctCount++;
-				wordList.head.value.correct_count++;
+				currentWord.correct_count++;
 				//increment total_score
 				totalScore++;
 			} else if (guess !== correctAnswer) {
 				//reset m to 1
-				isCorrect=false
 				currentWord.memory_value = 1;
-				// inCorrectCount++;
-				wordList.head.value.incorrect_count++;
+				currentWord.incorrect_count++;
 			}
-
-			// console.log(wordList.display());
-			wordList.move(wordList, currentWord.memory_value);
-			// console.log(wordList.display());
-
+			wordList.move(currentWord.memory_value);
 			// update language table based on req.language.id
 			LanguageService.updateLanguageTable(
 				req.app.get('db'),
 				req.language.id,
-				currentWord.id,
+				wordList.head.value.id,
 				totalScore
 			);
 			// update the word table based on the current word
 			LanguageService.updateWordTable(
 				req.app.get('db'),
-				wordList
-			);
-
-			// Update for client
+				wordList,
+				currentWord.memory_value,
+				currentWord.id,
+			)
 			returnWordObj = {
 				answer: correctAnswer,
 				isCorrect: isCorrect,
 				nextWord: nextWord.original,
 				totalScore: totalScore,
-				wordCorrectCount: wordList.head.value.correct_count,
-				wordIncorrectCount: wordList.head.value.incorrect_count,
+				wordCorrectCount: currentWord.correct_count,
+				wordIncorrectCount: currentWord.incorrect_count,
 			};
-
-			// res.status(200).end(); // Garbage
-			res.status(200).json(returnWordObj).end();
+			res.status(200).json(returnWordObj).end();	
 		} else {
 			res.status(500).end();
 		}
