@@ -53,15 +53,15 @@ const UserService = {
       const seq = await db.from('word_id_seq').select('last_value').first();
 
       const languageWords = [
-        ['Merde', 'Shit', 2],
-        ['Va te faire foutre', 'Kiss my ass', 3],
-        ['Putain', 'Whore', 4],
-        ['Salaud', 'Bastard', 5],
-        ['Zut', 'Damn', 6],
-        ['Salope', 'Slut', 7],
-        ['Brûle en l’enfer', 'Burn In Hell', 8],
-        ['Ta Gueule', 'Shut Up', 8],
-        ['Enculer', 'Ass Fuck', null],
+        ['Raison', 'Reason', 2],
+        ['Bonjour', 'Hello', 3],
+        ['Garcon', 'Boy', 4],
+        ['Fille', 'Girl', 5],
+        ['Temps', 'Time', 6],
+        ['Jour', 'Day', 7],
+        ['Beau', 'Handsome', 8],
+        ['Belle', 'Beautiful', 8],
+        ['Monde', 'World', null],
       ];
 
       const [languageHeadId] = await trx.into('word').insert(
