@@ -19,7 +19,7 @@ app.use(helmet())
 app.use('/api/auth', authRouter)
 app.use('/api/language', languageRouter)
 app.use('/api/user', userRouter)
-
+app.get('/',(req,res)=>{res.send('Spaced Repetition');});
 app.use(errorHandler)
 
 module.exports = app
