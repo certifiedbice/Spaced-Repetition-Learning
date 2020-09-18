@@ -6,21 +6,23 @@ import LanguageService from '../../services/lang-service.js';
 class Learning extends Component {
   static contextType = UserContext;
   state = {
-    'answer': '',
+    'answer': this.context.dashboard.words.find(wordObj=>this.context.correctAnswer===wordObj.original).translation,
     'isCorrect': false,
-    'nextWord': '',
+    'nextWord': this.context.correctAnswer,
     'totalScore': 0,
     'wordCorrectCount': 0,
     'wordIncorrectCount': 0,
   };
   async componentDidMount() {
-	console.log(this.context.guess)
-	console.log(this.state.answer)
-	console.log(await LanguageService.postGuess(this.context.guess))
-    // .then(res=>{
-	// 	console.log(res)
-	// 	this.setState(res)
-	// });
+	let res=await LanguageService.postGuess(this.context.guess);
+	if(res!==undefined){
+		this.setState({
+			isCorrect:res.isCorrect,
+			totalScore:res.totalScore,
+			wordCorrectCount:res.wordCorrectCount,
+			wordIncorrectCount:res.wordIncorrectCount
+		});
+  	}
   }
   render() {
     const {
@@ -39,6 +41,17 @@ class Learning extends Component {
         value='Next Word'
         onClick={() => {
           history.push('/learn');
+        }}
+      />
+    ));
+	const DashButton = withRouter(({ history }) => (
+      <input
+        name='button'
+        id='dashbutton'
+        type='button'
+        value='Return to dashboard'
+        onClick={() => {
+          history.push('/');
         }}
       />
     ));
@@ -67,6 +80,7 @@ class Learning extends Component {
         </div>
         <div>Score: {totalScore}</div>
         <NextWord />
+        <DashButton />
       </div>
     );
   }

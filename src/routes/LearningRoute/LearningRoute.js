@@ -13,7 +13,7 @@ class LearningRoute extends Component {
     this.context.setDashboard(dashboard);
   }
   render() {
-    return <Learning />;
+    return <Learning history={this.props.history}/>;
   }
 }
 

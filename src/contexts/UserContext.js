@@ -5,17 +5,18 @@ import IdleService from '../services/idle-service';
 
 const UserContext = React.createContext({
   user: {},
+  correctAnswer: '',
   dashboard: {},
   head: {},
   redirect: false,
   error: null,
-  //   setRedirect: () => {},
   checkGuess: () => {},
   setDashboard: () => {},
   setHead: () => {},
   setError: () => {},
   clearError: () => {},
   setUser: () => {},
+  setCorrectAnswer: () => {},
   processLogin: () => {},
   processLogout: () => {},
 });
@@ -28,6 +29,7 @@ export class UserProvider extends Component {
     const state = {
       user: {},
       guess: '',
+	  correctAnswer: '',
       dashboard: {
         language: {
           name: '',
@@ -57,7 +59,6 @@ export class UserProvider extends Component {
           nextWord: '',
         },
       },
-      //   redirect:false,
       error: null,
     };
 
@@ -109,10 +110,6 @@ export class UserProvider extends Component {
     this.setState({ head: data });
   };
 
-  //   setRedirect = (data) => {
-  //     this.setState({ redirect: data });
-  //   };
-
   setError = (error) => {
     console.error(error);
     this.setState({ error });
@@ -130,6 +127,10 @@ export class UserProvider extends Component {
     this.setState({ guess: guess });
   };
 
+  setCorrectAnswer = (correctAnswer) => {
+    this.setState({ correctAnswer: correctAnswer });
+  };
+  
   processLogin = (authToken) => {
     TokenService.saveAuthToken(authToken);
     const jwtPayload = TokenService.parseAuthToken();
@@ -175,11 +176,11 @@ export class UserProvider extends Component {
     const value = {
       user: this.state.user,
       guess: this.state.guess,
+	  correctAnswer:this.state.correctAnswer,
       redirect: this.state.redirect,
       error: this.state.error,
       dashboard: this.state.dashboard,
       head: this.state.head,
-      //   setRedirect: this.setRedirect,
       setDashboard: this.setDashboard,
       checkGuess: this.checkGuess,
       setHead: this.setHead,
@@ -187,6 +188,7 @@ export class UserProvider extends Component {
       clearError: this.clearError,
       setUser: this.setUser,
       setGuess: this.setGuess,
+	  setCorrectAnswer: this.setCorrectAnswer,
       processLogin: this.processLogin,
       processLogout: this.processLogout,
     };

@@ -33,14 +33,10 @@ const LanguageService = {
         'content-type': 'application/json',
         'authorization': `bearer ${TokenService.getAuthToken()}`,
       },
-      body: JSON.stringify({
-        guess: guess,
-      }),
+      body: JSON.stringify({guess}),
     })
-      .then((res) =>{ console.log(res)
-        !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-	  })
-      .catch((error) => console.error(error));
+    .then(res=>(!res.ok) ? res.json().then((e) => Promise.reject(e)) : res.json())
+    .catch((error) => console.error(error));
   },
 };
 
