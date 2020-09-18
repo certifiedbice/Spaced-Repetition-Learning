@@ -6,7 +6,7 @@ const { NODE_ENV } = require('./config')
 const errorHandler = require('./middleware/error-handler')
 const authRouter = require('./auth/auth-router')
 // const languageRouter = require('./language/language-router')
-// const userRouter = require('./user/user-router')
+const userRouter = require('./user/user-router')
 
 const app = express()
 
@@ -18,7 +18,7 @@ app.use(helmet())
 
 app.use('/api/auth', authRouter)
 // app.use('/api/language', languageRouter)
-// app.use('/api/user', userRouter)
+app.use('/api/user', userRouter)
 app.get('/',(req,res)=>{res.send('Spaced Repetition');});
 app.use(errorHandler)
 
