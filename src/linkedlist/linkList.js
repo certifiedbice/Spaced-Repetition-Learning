@@ -105,19 +105,35 @@ class LinkedList {
 			
 			// Only make the changes on the last iteration.
 			if(i===n){
-				// console.log(this.head)
+				// console.log('FINAL ITERATION\n')
+
+				// console.log('this.head=\n')
+
+				console.log(this.head)
+
 				// store this.head.next 
+				// console.log('tmpNext=this.head\n')
 				let tmpNext=this.head.next
 
 				// set head.next to the original head 
+				// console.log('this.head.next=tmpHead\n')
 				this.head.next=tmpHead;
+
 				// set the head.value.next to the new head.next.value.id
 				this.head.value.next=this.head.next.value.id
 
 				// set the head.next.next to the store head.next/tmpNext
 				this.head.next.next=tmpNext;
+
 				// set the head.next.value.next to the new head.next.next.value.id
-				this.head.next.value.next=this.head.next.next.value.id
+				// console.log(this.head)
+				// console.log(this.head.next.value.next)
+				if(this.head.next.next!==null){
+					console.log(this.head.next.next.value.id)
+					this.head.next.value.next=this.head.next.next.value.id
+				}
+				else{this.head.next.value.next=null}
+
 				// console.log('\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& END ITERATION\n')
 
 				while(nodeStorage.length!==0){
