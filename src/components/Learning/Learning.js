@@ -6,7 +6,7 @@ import './Learning.css';
 class Learning extends Component {
 	static contextType = UserContext;
 	handleChange(e) {
-		if(e.keyCode===13){this.props.history.push('/result');}
+		if(e.keyCode===13&&e.target.value!==''&&e.target.value!==null&&e.target.value!==undefined){this.props.history.push('/result');}
 		this.context.setCorrectAnswer(this.context.head.wordsDetails.nextWord);
 		this.context.setGuess(e.target.value);
 	}
@@ -46,7 +46,7 @@ class Learning extends Component {
 				<div id='incorrect_count'>{`Incorrect guesses: ${head.wordsDetails.incorrect_count}`}</div>
 				<div id='score'>{`Score: ${head.wordsDetails.totalScore}`}</div>
 				<form onSubmit={(e)=>{this.handleSubmit(e)}}>
-				<input name='guess' type='text' onKeyUp={(e)=>{this.handleChange(e)}}/>
+				<input name='guess' type='text' required onKeyUp={(e)=>{this.handleChange(e)}}/>
 				<ResultButton />
 				<DashButton />
 				</form>

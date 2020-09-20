@@ -20,7 +20,7 @@ class Dashboard extends Component {
     return (
       <section id='dashboard-section'>
 	  	<h2>My Language:</h2>
-		<h3>{language.name}</h3>
+		<h2>{language.name}</h2>
 		<h2>Words:</h2>
             <ul>
               {words.map((word, index) => (
@@ -31,7 +31,7 @@ class Dashboard extends Component {
                   <div>Incorrect: {word.incorrect_count}</div>
                 </li>
               ))}
-          <li>Score: {language.total_score}</li>
+          <li>Total correct answers: {language.total_score}</li>
         </ul>
         <StartLearningButton />
       </section>
